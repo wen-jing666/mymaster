@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="index.css"/>
+</head>
+<body>
+	 <section class="todoapp">
+        <div>
+            <header class="header" >
+                <h1>todos</h1>
+                <input class="new-todo" placeholder="请输入内容" v-model="val" @keyup.13="keyup"/>
+            </header>
+            <section class="main">
+                <input class="toggle-all" type="checkbox" v-model="all" @click="changeall">
+                <ul class="todo-list">
+                    <li class="{completed:val.checked}" v-for="(val,key) in arr">
+                        <div class="view">
+                            <input class="toggle" type="checkbox" v-model="val.checked" @click="check">
+                            <label>{{val.text}}</label>
+                            <button class="destroy"></button>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <footer class="footer">
+	            <span class="todo-count">
+	            	<strong>0</strong>
+	            	<span>条未选中</span>
+	            </span>
+        </footer>
+    </section>
+	<script src="vue.js"></script>
+	<script type="text/javascript">
+	 new Vue({
+			el:'.todoapp',
+			 data: {
+			    arr:[
+			    	{text:'小红',checked:false,id:0},
+			    	{text:'小黄',checked:false,id:1},
+			    	{text:'小橙',checked:false,id:2},
+			    	{text:'小绿',checked:false,id:3}
+			    ]
+			 },
+			val:'',
+			 all:false,
+			 num:0,
+			 methods:{
+			 	keyup(){
+			 		this.arr.push({
+			 			text:this.val,
+			 			checked:false,
+			 			id:+new Date
+			 		})
+			 		
+			 		this.val="";
+			 	},
+			 	changeall(){
+			 		this.arr.forEach(e=>e.checked=this.all);
+			 	},
+			 	check(){
+			 		this.all=this.arr.every(e=>e.checked);
+			 	}
+			 }
+		})
+	</script>
+</body>
+</html>
